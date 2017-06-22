@@ -6,10 +6,16 @@
 
 </div>
 
-<ul>
-  <li>
-    <input type=text name="cpfCnpj" id="cpfCnpj" [(ngModel)]="cpfCnpj" appBrCpfCnpjMask>
-  </li>
-  <br>
-</ul>
+<form [formGroup]="form">
+  <ul>
+    <li>
+      <input type=text name="cpfCnpj" id="cpfCnpj" appBrCpfCnpjMask [(ngModel)]="cpfCnpjModel" formControlName="cpfCnpjModel">
+    </li>
+    <br>
+  </ul>
+
+  <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
+  <p><b>Form Value:</b> {{form.controls.cpfCnpjModel.value}}</p>
+  <p><b>NgModel:</b> {{ cpfCnpjModel ? cpfCnpjModel : 'Empty' }}</p>
+</form>
 

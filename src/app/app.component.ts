@@ -1,16 +1,23 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title = 'app';
-  cpfCnpj: string = null;
 
-  visit() {
-    console.log('Visiting rangle');
-    location.href = 'https://rangle.io';
+export class AppComponent implements OnInit {
+
+  title = 'app';
+  form: FormGroup;
+  public cpfCnpjModel = '28067476000169';
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      cpfCnpjModel : this.cpfCnpjModel
+    });
   }
 }
