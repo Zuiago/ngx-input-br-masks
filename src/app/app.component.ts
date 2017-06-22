@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
 
   title = 'app';
   form: FormGroup;
-  public cpfCnpjModel = '28067476000169';
+  public cpfCnpjModel: string;
 
   constructor(private fb: FormBuilder) {}
 
