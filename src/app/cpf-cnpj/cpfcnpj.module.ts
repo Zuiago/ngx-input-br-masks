@@ -10,5 +10,5 @@ import { CpfCnpjConfig } from './cpfcnpj.config';
   exports: [CpfCnpjDirective]
 })
 export class CpfCnpjModule {
-  public static forRoot(): ModuleWithProviders {return {ngModule: CpfCnpjModule, providers: [CpfCnpjConfig]}; }
+  public static forRoot(): ModuleWithProviders { return {ngModule: CpfCnpjModule, providers: [CpfCnpjConfig]}; }
 }

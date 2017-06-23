@@ -9,14 +9,72 @@
 <form [formGroup]="form">
   <ul>
     <li>
-      <input type=text name="cpfCnpj" id="cpfCnpj" appBrCpfCnpjMask [(ngModel)]="cpfCnpjModel"
-             formControlName="cpfCnpjModel">
+      CPF/CNPJ
+      <input type=text name="cpfCnpj" id="cpfCnpj" BrCpfCnpjMask [(ngModel)]="cpfCnpjModel"
+             formControlName="cpfCnpjModel"/>
     </li>
-    <br>
+
   </ul>
 
   <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
   <p><b>Form Value:</b> {{form.controls.cpfCnpjModel.value}}</p>
   <p><b>NgModel:</b> {{ cpfCnpjModel ? cpfCnpjModel : 'Empty' }}</p>
+
+
+  <ul>
+    <li>
+      PHONE
+      <input type=text name="phone" id="phone" BrPhoneMask="" [(ngModel)]="phoneModel"
+             formControlName="phoneModel"/>
+    </li>
+
+  </ul>
+
+  <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
+  <p><b>Form Value:</b> {{form.controls.phoneModel.value}}</p>
+  <p><b>NgModel:</b> {{ phoneModel ? phoneModel : 'Empty' }}</p>
+
+
+  <ul>
+    <li>
+      CEP
+      <input type=text name="cep" id="cep" BrCepMask [(ngModel)]="cepModel"
+             formControlName="cepModel"/>
+    </li>
+
+  </ul>
+
+  <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
+  <p><b>Form Value:</b> {{form.controls.cepModel.value}}</p>
+  <p><b>NgModel:</b> {{ cepModel ? cepModel : 'Empty' }}</p>
+
+
+  <ul>
+    <li>
+      CPF
+      <input type=text name="cpf" id="cpf" BrCpfMask [(ngModel)]="cpfModel"
+             formControlName="cpfModel"/>
+    </li>
+
+  </ul>
+
+  <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
+  <p><b>Form Value:</b> {{form.controls.cpfModel.value}}</p>
+  <p><b>NgModel:</b> {{ cpfModel ? cpfModel : 'Empty' }}</p>
+
+
+  <ul>
+    <li>
+      CNPJ
+      <input type=text name="cnpj" id="cnpj" BrCnpjMask [(ngModel)]="cnpjModel"
+             formControlName="cnpjModel"/>
+    </li>
+
+  </ul>
+
+  <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
+  <p><b>Form Value:</b> {{form.controls.cnpjModel.value}}</p>
+  <p><b>NgModel:</b> {{ cnpjModel ? cnpjModel : 'Empty' }}</p>
+
 </form>
 

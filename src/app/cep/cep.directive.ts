@@ -1,51 +1,38 @@
 import {Directive, ElementRef, HostListener, OnInit, forwardRef} from '@angular/core';
 
-import * as BrV from 'br-validations';
 import * as StringMask from 'string-mask';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 
-export function createCpfValidator() {
-  return (c: FormControl) => {
-    const err = {
-      validationCpfCnpjError: {
-        valid: false,
-      }
-    };
-    return !BrV.cpf.validate(c.value) ? err : null;
-  }
-}
-
-export function createCnpjValidator() {
+export function createCepValidator() {
   return (c: FormControl) => {
     const err = {
       validationPatternError: {
         valid: false,
       }
     };
-    return !BrV.cnpj.validate(c.value) ? err : null;
+    return !(c.value.toString().trim().length === 8) ? err : null;
   }
 }
 
 @Directive({
-  selector: '[BrCpfCnpjMask]',
+  selector: '[BrCepMask]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CpfCnpjDirective),
+      useExisting: forwardRef(() => CepDirective),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => CpfCnpjDirective),
+      useExisting: forwardRef(() => CepDirective),
       multi: true
     }
   ]
 })
-export class CpfCnpjDirective implements OnInit, ControlValueAccessor {
+export class CepDirective implements OnInit, ControlValueAccessor {
 
   /** Pattern created by StringMask library*/
-  private cnpjPattern = new StringMask('00.000.000\/0000-00');
-  private cpfPattern = new StringMask('000.000.000-00');
+  private cepPattern = new StringMask('00000-000');
 
   /** Placeholders for the callbacks which are later providesd by the Control Value Accessor*/
   private onChangeCallback = (_: any) => {
@@ -81,11 +68,7 @@ export class CpfCnpjDirective implements OnInit, ControlValueAccessor {
     }
 
     const cleanValue: string = this._cleanValue(inputValue);
-    if (cleanValue.length > 11) {
-      this._elementRef.nativeElement.value = this.cnpjPattern.apply(cleanValue);
-    } else {
-      this._elementRef.nativeElement.value = this.cpfPattern.apply(cleanValue) || '';
-    }
+    this._elementRef.nativeElement.value = (this.cepPattern.apply(cleanValue) || '').replace(/[^0-9]$/, '');
   }
 
   /** From ControlValueAccessor interface*/
@@ -110,32 +93,19 @@ export class CpfCnpjDirective implements OnInit, ControlValueAccessor {
   /** It applies the mask in the input and updates the control's value. */
   private _applyValueChanges(cleanValue): void {
 
-    let formattedValue: string;
-    if (cleanValue.length > 11) {
-      formattedValue = this.cnpjPattern.apply(cleanValue);
-    } else {
-      formattedValue = this.cpfPattern.apply(cleanValue) || '';
-    }
-
-    formattedValue = formattedValue.trim().replace(/[^0-9]$/, '');
-    this._elementRef.nativeElement.value = formattedValue;
+    this._elementRef.nativeElement.value = (this.cepPattern.apply(cleanValue) || '').replace(/[^0-9]$/, '');
     this.onChangeCallback(cleanValue);
   }
 
   /** It clean the captured value in the input*/
   private _cleanValue(viewValue): string {
-    return viewValue.replace(/[^\d]/g, '').slice(0, 14);
+    return viewValue.toString().replace(/[^0-9]/g, '').slice(0, 8);
   }
 
   /** Return the validation result*/
   validate(c: FormControl) {
-
-    if (c.value) {
-      if (c.value.length > 11) {
-        this.validateFn = createCnpjValidator();
-      } else {
-        this.validateFn = createCpfValidator();
-      }
+    if(c.value){
+      this.validateFn = createCepValidator();
     }
     return this.validateFn(c);
   }

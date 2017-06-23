@@ -1,51 +1,54 @@
 import {Directive, ElementRef, HostListener, OnInit, forwardRef} from '@angular/core';
 
-import * as BrV from 'br-validations';
 import * as StringMask from 'string-mask';
 import {ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR} from '@angular/forms';
 
-export function createCpfValidator() {
-  return (c: FormControl) => {
-    const err = {
-      validationCpfCnpjError: {
-        valid: false,
-      }
-    };
-    return !BrV.cpf.validate(c.value) ? err : null;
-  }
-}
 
-export function createCnpjValidator() {
+export function createPhoneValidator(valueLength) {
   return (c: FormControl) => {
     const err = {
-      validationPatternError: {
+      validationPhoneError: {
         valid: false,
       }
     };
-    return !BrV.cnpj.validate(c.value) ? err : null;
+    // Length 8- 8D without DD
+    // Length 9- 9D without DD
+    // Length 10- 9D with DD
+    // Length 11- 8D with DD and 0800
+    return !(valueLength >= 8 && valueLength <= 11) ? err : null;
   }
 }
 
 @Directive({
-  selector: '[BrCpfCnpjMask]',
+  selector: '[BrPhoneMask]',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => CpfCnpjDirective),
+      useExisting: forwardRef(() => PhoneDirective),
       multi: true
     },
     {
       provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => CpfCnpjDirective),
+      useExisting: forwardRef(() => PhoneDirective),
       multi: true
     }
   ]
 })
-export class CpfCnpjDirective implements OnInit, ControlValueAccessor {
+export class PhoneDirective implements OnInit, ControlValueAccessor{
 
   /** Pattern created by StringMask library*/
-  private cnpjPattern = new StringMask('00.000.000\/0000-00');
-  private cpfPattern = new StringMask('000.000.000-00');
+  private phoneMask8D = {
+    areaCode: new StringMask('(00) 0000-0000'),
+    simple: new StringMask('0000-0000')
+  };
+  private phoneMask9D = {
+    areaCode: new StringMask('(00) 00000-0000'),
+    simple: new StringMask('00000-0000')
+  };
+  private phoneMask0800 = {
+    areaCode: null,
+    simple: new StringMask('0000-000-0000')
+  };
 
   /** Placeholders for the callbacks which are later providesd by the Control Value Accessor*/
   private onChangeCallback = (_: any) => {
@@ -81,10 +84,17 @@ export class CpfCnpjDirective implements OnInit, ControlValueAccessor {
     }
 
     const cleanValue: string = this._cleanValue(inputValue);
-    if (cleanValue.length > 11) {
-      this._elementRef.nativeElement.value = this.cnpjPattern.apply(cleanValue);
+
+    if (cleanValue.indexOf('0800') === 0) {
+      this._elementRef.nativeElement.value = this.phoneMask0800.simple.apply(cleanValue);
+    } else if (cleanValue.length < 9) {
+      this._elementRef.nativeElement.value = this.phoneMask8D.simple.apply(cleanValue) || '';
+    } else if (cleanValue.length < 10){
+      this._elementRef.nativeElement.value = this.phoneMask9D.simple.apply(cleanValue);
+    } else if (cleanValue.length < 11){
+      this._elementRef.nativeElement.value = this.phoneMask8D.areaCode.apply(cleanValue);
     } else {
-      this._elementRef.nativeElement.value = this.cpfPattern.apply(cleanValue) || '';
+      this._elementRef.nativeElement.value = this.phoneMask9D.areaCode.apply(cleanValue);
     }
   }
 
@@ -111,10 +121,16 @@ export class CpfCnpjDirective implements OnInit, ControlValueAccessor {
   private _applyValueChanges(cleanValue): void {
 
     let formattedValue: string;
-    if (cleanValue.length > 11) {
-      formattedValue = this.cnpjPattern.apply(cleanValue);
+    if (cleanValue.indexOf('0800') === 0) {
+      formattedValue = this.phoneMask0800.simple.apply(cleanValue);
+    } else if (cleanValue.length < 9) {
+      formattedValue = this.phoneMask8D.simple.apply(cleanValue) || '';
+    } else if (cleanValue.length < 10){
+      formattedValue = this.phoneMask9D.simple.apply(cleanValue);
+    } else if (cleanValue.length < 11){
+      formattedValue = this.phoneMask8D.areaCode.apply(cleanValue);
     } else {
-      formattedValue = this.cpfPattern.apply(cleanValue) || '';
+      formattedValue = this.phoneMask9D.areaCode.apply(cleanValue);
     }
 
     formattedValue = formattedValue.trim().replace(/[^0-9]$/, '');
@@ -124,19 +140,17 @@ export class CpfCnpjDirective implements OnInit, ControlValueAccessor {
 
   /** It clean the captured value in the input*/
   private _cleanValue(viewValue): string {
-    return viewValue.replace(/[^\d]/g, '').slice(0, 14);
+    return viewValue.toString().replace(/[^0-9]/g, '').slice(0, 11);
   }
 
   /** Return the validation result*/
   validate(c: FormControl) {
 
-    if (c.value) {
-      if (c.value.length > 11) {
-        this.validateFn = createCnpjValidator();
-      } else {
-        this.validateFn = createCpfValidator();
-      }
+    if(c.value){
+      var valueLength = c.value && c.value.toString().length;
+      this.validateFn = createPhoneValidator(valueLength);
     }
     return this.validateFn(c);
   }
+
 }
