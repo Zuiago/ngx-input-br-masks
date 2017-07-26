@@ -1,77 +1,68 @@
 <!--The whole content below can be removed with the new code.-->
 <div style="text-align:center">
   <h1>
-    DEMO {{title}}
+    DEMO MASKS {{title}}
   </h1>
 
 </div>
 
-<form [formGroup]="form">
-  <ul>
-    <li>
-      CPF/CNPJ
-      <input type=text name="cpfCnpj" id="cpfCnpj" BrCpfCnpjMask [(ngModel)]="cpfCnpjModel"
-             formControlName="cpfCnpjModel"/>
-    </li>
+<form [formGroup]="form" novalidate autocomplete="off">
 
-  </ul>
-
+  <div class="ui-g ui-fluid">
+    <div class="ui-md-3">
+        <label for="cpfCnpj">CPFCNPJ</label>
+        <input type=text name="cpfCnpj" id="cpfCnpj" pInputText BrCpfCnpjMask [(ngModel)]="cpfCnpjModel"
+               formControlName="cpfCnpjModel"/>
+    </div>
+  </div>
   <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
   <p><b>Form Value:</b> {{form.controls.cpfCnpjModel.value}}</p>
   <p><b>NgModel:</b> {{ cpfCnpjModel ? cpfCnpjModel : 'Empty' }}</p>
 
 
-  <ul>
-    <li>
-      PHONE
-      <input type=text name="phone" id="phone" BrPhoneMask="" [(ngModel)]="phoneModel"
+  <div class="ui-g ui-fluid">
+    <div class="ui-md-3">
+      <label for="phone">PHONE</label>
+      <input type=text name="phone" id="phone" pInputText BrPhoneMask [(ngModel)]="phoneModel"
              formControlName="phoneModel"/>
-    </li>
-
-  </ul>
-
+    </div>
+  </div>
   <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
   <p><b>Form Value:</b> {{form.controls.phoneModel.value}}</p>
   <p><b>NgModel:</b> {{ phoneModel ? phoneModel : 'Empty' }}</p>
 
 
-  <ul>
-    <li>
-      CEP
-      <input type=text name="cep" id="cep" BrCepMask [(ngModel)]="cepModel"
+  <div class="ui-g ui-fluid">
+    <div class="ui-md-3">
+      <label for="phone">CEP</label>
+      <input type=text name="cep" id="cep" pInputText BrCepMask [(ngModel)]="cepModel"
              formControlName="cepModel"/>
-    </li>
-
-  </ul>
-
+    </div>
+  </div>
   <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
   <p><b>Form Value:</b> {{form.controls.cepModel.value}}</p>
   <p><b>NgModel:</b> {{ cepModel ? cepModel : 'Empty' }}</p>
 
 
-  <ul>
-    <li>
-      CPF
-      <input type=text name="cpf" id="cpf" BrCpfMask [(ngModel)]="cpfModel"
+  <div class="ui-g ui-fluid">
+    <div class="ui-md-3">
+      <label for="phone">CPF</label>
+      <input type=text name="cpf" id="cpf" pInputText BrCpfMask [(ngModel)]="cpfModel"
              formControlName="cpfModel"/>
-    </li>
-
-  </ul>
-
+    </div>
+  </div>
   <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
   <p><b>Form Value:</b> {{form.controls.cpfModel.value}}</p>
   <p><b>NgModel:</b> {{ cpfModel ? cpfModel : 'Empty' }}</p>
 
 
-  <ul>
-    <li>
-      CNPJ
-      <input type=text name="cnpj" id="cnpj" BrCnpjMask [(ngModel)]="cnpjModel"
+  <div class="ui-g ui-fluid">
+    <div class="ui-md-3">
+      <label for="phone">CNPJ</label>
+      <input type=text name="cnpj" id="cnpj" pInputText BrCnpjMask [(ngModel)]="cnpjModel"
              formControlName="cnpjModel"/>
-    </li>
-
-  </ul>
-
+    </div>
+  </div>
   <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
   <p><b>Form Value:</b> {{form.controls.cnpjModel.value}}</p>
   <p><b>NgModel:</b> {{ cnpjModel ? cnpjModel : 'Empty' }}</p>

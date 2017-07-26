@@ -9,6 +9,9 @@ import { CepModule } from './cep/cep.module';
 import { CpfModule } from './cpf/cpf.module';
 import { CnpjModule } from './cnpj/cnpj.module';
 
+import { InputTextModule } from 'primeng/primeng';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +24,8 @@ import { CnpjModule } from './cnpj/cnpj.module';
     PhoneModule,
     CepModule,
     CpfModule,
-    CnpjModule
+    CnpjModule,
+    InputTextModule
   ],
   providers: [],
   bootstrap: [AppComponent]
