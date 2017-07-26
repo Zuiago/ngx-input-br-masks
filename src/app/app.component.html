@@ -76,5 +76,18 @@
   <p><b>Form Value:</b> {{form.controls.cnpjModel.value}}</p>
   <p><b>NgModel:</b> {{ cnpjModel ? cnpjModel : 'Empty' }}</p>
 
+  <ul>
+    <li>
+      MONEY
+      <input type=text name="money" id="money" MoneyMask [(ngModel)]="moneyModel"
+             formControlName="moneyModel"/>
+    </li>
+
+  </ul>
+
+  <p><b>Form Valid:</b> {{ form.valid ? 'true' : 'false' }}</p>
+  <p><b>Form Value:</b> {{form.controls.moneyModel.value}}</p>
+  <p><b>NgModel:</b> {{ cnpjModel ? cnpjModel : 'Empty' }}</p>
+
 </form>
 

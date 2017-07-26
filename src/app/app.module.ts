@@ -8,6 +8,7 @@ import { PhoneModule } from './phone/phone.module';
 import { CepModule } from './cep/cep.module';
 import { CpfModule } from './cpf/cpf.module';
 import { CnpjModule } from './cnpj/cnpj.module';
+import { MoneyModule } from './money/money.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { CnpjModule } from './cnpj/cnpj.module';
     PhoneModule,
     CepModule,
     CpfModule,
-    CnpjModule
+    CnpjModule,
+    MoneyModule
   ],
   providers: [],
   bootstrap: [AppComponent]
