@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   public cepModel: number;
   public cpfModel: string;
   public cnpjModel: string;
+  public moneyModel: string;
 
   constructor(private fb: FormBuilder) {}
 
@@ -25,7 +26,8 @@ export class AppComponent implements OnInit {
       phoneModel: this.phoneModel,
       cepModel: this.cepModel,
       cpfModel: this.cpfModel,
-      cnpjModel: this.cnpjModel
+      cnpjModel: this.cnpjModel,
+      moneyModel: this.moneyModel
     });
   }
 }
