@@ -21,10 +21,9 @@ export class MoneyDirective implements OnInit, ControlValueAccessor {
   // private symbolSeparation = ' ';
   private decimalsPattern = this.decimals > 0 ? this.decimalDelimiter + new Array(this.decimals + 1).join('0') : '';
   private maskPattern = this.currencySym + ' #' + this.thousandsDelimiter + '##0' + this.decimalsPattern;
-  private moneyMask  = new StringMask(this.maskPattern, {reverse: true});
 
   /** Pattern created by StringMask library*/
-  private cepPattern = new StringMask('00000-000');
+  private moneyMask  = new StringMask(this.maskPattern, {reverse: true});
 
   /** Placeholders for the callbacks which are later providesd by the Control Value Accessor*/
   private onChangeCallback = (_: any) => {
